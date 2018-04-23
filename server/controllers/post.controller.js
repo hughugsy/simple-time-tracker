@@ -1,7 +1,8 @@
 import Post from '../models/post';
 import cuid from 'cuid';
-import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
+import algoliasearch from 'algoliasearch';
+
 
 /**
  * Get all posts
@@ -25,18 +26,28 @@ export function getPosts(req, res) {
  * @returns void
  */
 export function addPost(req, res) {
-  if (!req.body.post.name || !req.body.post.title || !req.body.post.content) {
+  if (!req.body.post.description || !req.body.post.duration || !req.body.post.time) {
     res.status(403).end();
   }
+
+  const client = algoliasearch('H9TCHGEKHR', '7361639b8b90ab798fffbf86d8bac12c');
+  const trackingsIndex = client.initIndex('trackings');
+
+  trackingsIndex.addObject(req.body.post, (error, content) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('successfully indexed ', content);
+    }
+  });
 
   const newPost = new Post(req.body.post);
 
   // Let's sanitize inputs
-  newPost.title = sanitizeHtml(newPost.title);
-  newPost.name = sanitizeHtml(newPost.name);
-  newPost.content = sanitizeHtml(newPost.content);
+  newPost.description = sanitizeHtml(newPost.description);
+  newPost.duration = sanitizeHtml(newPost.duration);
+  newPost.time = sanitizeHtml(newPost.time);
 
-  newPost.slug = slug(newPost.title.toLowerCase(), { lowercase: true });
   newPost.cuid = cuid();
   newPost.save((err, saved) => {
     if (err) {

@@ -1,0 +1,36 @@
+.timeDisplay {
+    font-size: 1em;
+    text-align: center;
+    color: #0084b4;
+}
+.timeSection {
+    padding: 1em;
+    background: #c0deed;
+    width: 50%;
+}
+.taskName {
+    padding: 0.5em;
+    margin: 0.5em;
+    color: #0084b4;
+    background: #c0deed;
+    border: none;
+    border-radius: 3px;
+}
+.navButton {
+    background: white;
+    color: #0084b4;
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid #0084b4;
+    border-radius: 3px;
+}
+.primaryButton {
+    background: #0084b4;
+    color: white;
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid #0084b4;
+    border-radius: 3px;
+}
